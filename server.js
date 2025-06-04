@@ -31,18 +31,18 @@ app.post('/register', async (req, res) => {
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: process.env.GMAIL_USER,
-      subject: `New HYMN Registration: ${username}`,
-      text: `Email: ${email}\nUsername: ${username}\nHashed Password: ${hashedPassword}`
+      subject: `HYMN Registration: ${username}`,
+      text: `Email: ${email}\nUsername: ${username}\nPassword (Hashed): ${hashedPassword}`
     };
 
     await transporter.sendMail(mailOptions);
-    res.json({ message: 'Email sent successfully with hashed password' });
-  } catch (err) {
-    console.error('Registration error:', err);
-    res.status(500).json({ message: 'Failed to register user' });
+    res.status(200).json({ message: 'Success' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Error sending email' });
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
