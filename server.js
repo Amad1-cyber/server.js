@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,14 +23,14 @@ app.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'relectance@gmail.com',
-        pass: 'YOUR-APP-PASSWORD'
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS
       }
     });
 
     const mailOptions = {
-      from: 'relectance@gmail.com',
-      to: 'relectance@gmail.com',
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
       subject: `New HYMN Registration: ${username}`,
       text: `Email: ${email}\nUsername: ${username}\nHashed Password: ${hashedPassword}`
     };
